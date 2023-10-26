@@ -3,23 +3,30 @@ import React from 'react';
 import img from '../../assets/images/login/login.svg'
 import { Link } from 'react-router-dom';
 
-const Login = () => {
-    const handleLogin = (e)=>{
+const SignUp = () => {
+    const handleSignUp = e => {
         e.preventDefault()
+        const name= e.target.name.value
         const email = e.target.email.value
         const password = e.target.password.value
-        console.log(email,password)
+        console.log(name,email,password)
     }
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
   <div className="hero-content flex-col lg:flex-row">
     <div className="text-center lg:text-left w-1/2">
-      <h1 className="text-5xl font-bold mb-5">Login now!</h1>
+      <h1 className="text-5xl font-bold mb-5">Sign Up</h1>
       <img src={img} alt="" />
     </div>
     <div className="card flex-shrink-0 max-w-sm shadow-2xl bg-base-100 w-1/2">
-      <form className="card-body" onSubmit={handleLogin}>
+      <form className="card-body" onSubmit={handleSignUp}>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Name</span>
+          </label>
+          <input type="text" name='name' placeholder="name" className="input input-bordered" required />
+        </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
@@ -37,10 +44,10 @@ const Login = () => {
         </div>
         <div className="form-control mt-6">
           
-          <input className="btn btn-primary" type="submit" value="Login" />
+          <input className="btn btn-primary" type="submit" value="Sign Up" />
         </div>
       </form>
-      <p className='text-center my-2'>New To Car Doctors: <Link className='text-orange-400 font-semibold underline' to='/signup'> Sing Up</Link></p>
+      <p className='text-center my-2'>Already have an account? <Link className='text-orange-400 font-semibold underline' to='/login'> Login</Link></p>
     </div>
   </div>
 </div>
@@ -48,4 +55,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
