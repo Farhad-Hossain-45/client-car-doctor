@@ -1,12 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import img from '../../assets/images/login/login.svg'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import axios from 'axios';
 
 const Login = () => {
   const {signIn} = useContext(AuthContext)
+  const location = useLocation()
+  // console.log(location)
+  const navigate = useNavigate()
     const handleLogin = (e)=>{
         e.preventDefault()
         const email = e.target.email.value
@@ -14,7 +18,14 @@ const Login = () => {
         console.log(email,password)
         signIn(email,password)
         .then(result => {
+          
           console.log(result.user)
+          const user = {email}
+          // navigate(location?.state ? location.state : '/')
+          axios.post('http://localhost:5000/jwt',user)
+          .then(res => {
+            console.log(res.data)
+          })
         })
         .catch(error => console.error(error))
 
