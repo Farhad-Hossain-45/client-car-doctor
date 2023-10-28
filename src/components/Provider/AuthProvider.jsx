@@ -1,15 +1,45 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import React, { createContext, useState } from 'react';
+import auth from '../../../Firebase/Firebase.config';
+import { useEffect } from 'react';
 
 export const AuthContext = createContext()
 const AuthProvider = ({children}) => {
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true)
 
+    const createUser = (email,password) =>{
+        setLoading(true)
+        return createUserWithEmailAndPassword(auth,email,password)
+    }
+    const signIn = (email,password)=>{
+        setLoading(true)
+        return signInWithEmailAndPassword(auth,email,password)
+    }
+
+    const logOut = () =>{
+        setLoading(true)
+       return signOut(auth)
+    }
+    useEffect(()=>{
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
+            setUser(currentUser)
+            setLoading(false)
+        })
+        return ()=>{
+            
+            return unSubscribe()
+        }
+    },[])
+
     const authInfo = {
         user,
-        loading
+        loading,
+        createUser,
+        signIn,
+        logOut
     }
     return (
         <AuthContext.Provider value={authInfo}>

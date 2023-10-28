@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
   const { _id, title, img, price } = service || {};
@@ -14,7 +15,9 @@ const ServiceCard = ({ service }) => {
           <h2 className="card-title">{title}</h2>
           <p>price : ${price}</p>
           <div className="card-actions">
-            <button className="btn btn-primary">Buy Now</button>
+            <Link to={`/booking/${_id}`}>
+              <button className="btn btn-primary">Book Now</button>
+            </Link>
           </div>
         </div>
       </div>

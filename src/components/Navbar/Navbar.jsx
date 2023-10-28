@@ -1,14 +1,35 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/icons/logo.svg'
+import { AuthContext } from '../Provider/AuthProvider';
+import auth from '../../../Firebase/Firebase.config';
 
 const Navbar = () => {
+  const {user,logOut} = useContext(AuthContext)
+
+  const handleLogOut = ()=>{
+    logOut(auth)
+    .then(()=>{})
+    .catch((error)=>{
+      console.error(error)
+    })
+
+    
+  }
     const navLinks = <>
      <li><NavLink to="/">Home</NavLink></li>
      <li><NavLink to="/about">About</NavLink></li>
      <li><NavLink to="/service">Services</NavLink></li>
-     <li><NavLink to="/login">Login</NavLink></li>
+     {
+        user?.email ? <>
+        <li><NavLink to="/booked">My Booking</NavLink></li>
+        <button onClick={handleLogOut}>Log Out</button>
+        </>:
+        
+     
+     <li><NavLink to="/login">login</NavLink></li>
+     }
         
        
 
