@@ -21,10 +21,16 @@ const Login = () => {
           
           console.log(result.user)
           const user = {email}
-          // navigate(location?.state ? location.state : '/')
-          axios.post('http://localhost:5000/jwt',user)
+          
+          axios.post('http://localhost:5000/jwt',user,{
+            withCredentials: true
+          })
           .then(res => {
             console.log(res.data)
+            if(res.data.success){
+              navigate(location?.state ? location.state : '/')
+            }
+            
           })
         })
         .catch(error => console.error(error))
